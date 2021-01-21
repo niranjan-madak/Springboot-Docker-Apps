@@ -1,17 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springbootdockerapp
+  name: spring-app
 spec:
+  selector:
+    matchLabels:
+      app: spring-app
   replicas: 1
   template:
     metadata:
       labels:
-        app: springbootdockerapp
+        app: spring-app
     spec:
       containers:
-        - name: springbootdockerapp
-          image: springbootdockerapp
+        - name: spring-app
+          image: spring-app
           ports:
             - containerPort: 8080
 
@@ -19,14 +22,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: springbootdockerapp
+  name: spring-app
   labels:
-    name: springbootdockerapp
+    name: spring-app
 spec:
   ports:
     - port: 8080
       targetPort: 8080
       protocol: TCP
   selector:
-    app: springbootdockerapp
-  type: NodePort
+    app: spring-app
+  type: LoadBalancer
+
